@@ -1,6 +1,7 @@
 import pygame
+from userCommunication import create_message
 from constants import SCREEN_WIDTH, SCREEN_HEIGTH, SCREEN_TITLE, SCREEN_BACKGROUND_COLOR, SCREEN_BORDER, TICK, DIALOG_FONT
-from dialog import create_message
+
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -10,21 +11,16 @@ pygame.display.set_caption(SCREEN_TITLE)
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGTH])
 screen_background = pygame.image.load("./Images/hintergrund.png")
 
-
-def draw_screen() -> None:
-    screen.blit(screen_background, (0, 0))
-    pygame.display.update()
-
-
-
 font = pygame.font.Font(DIALOG_FONT, 24)
 snip = font.render("", True, "white")
 text_counter = 0
 text_speed = 3
-message = "Heiner ist der Beste"
 
+level = 1
 
-
+def draw_screen() -> None:
+    screen.blit(screen_background, (0, 0))
+    pygame.display.update()
 
 
 # ++++++++++++++++++++++++++++++++++ Game loop +++++++++++++++++++++++++++++++++++++++
@@ -35,7 +31,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    message, new_input = create_message("ja")
+    message, new_input = create_message("Nein", level)
     if text_counter < text_speed * len(message):
         text_counter += 1
 
