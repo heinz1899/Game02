@@ -12,11 +12,14 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGTH])
 screen_background = pygame.image.load("./Images/hintergrund.png")
 
 font = pygame.font.Font(DIALOG_FONT, 24)
-snip = font.render("", True, "white")
+snip1 = font.render("", True, "white")
+#snip2 = font.render("", True, "white")
 text_counter = 0
-text_speed = 3
+
+text_speed = 10
 
 level = 1
+
 
 def draw_screen() -> None:
     screen.blit(screen_background, (0, 0))
@@ -31,12 +34,29 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    message, new_input = create_message("Nein", level)
-    if text_counter < text_speed * len(message):
+    messages, new_input = create_message("Nein", level)
+    if text_counter == 0:
+        snip2 = font.render("", True, "white")
+
+
+    if text_counter < (text_speed * (len(messages[0])) + (text_speed * len(messages[1]))):
         text_counter += 1
 
-    snip = font.render(message[0 : text_counter // text_speed], True, "white")
-    screen.blit(snip, (20, SCREEN_BORDER))
+        snip1 = font.render(messages[0][0 : text_counter // text_speed], True, "white")
+
+    len_multiplicate_speed = text_speed * len(messages[0])
+    if (text_counter >= len_multiplicate_speed) and (
+        text_counter < (text_speed * (len(messages[0])) + (text_speed * len(messages[1])))
+    ):
+
+        if text_counter - len_multiplicate_speed < (text_speed * len(messages[1])):
+            text_counter += 1
+
+        snip2 = font.render(messages[1][0 : ((text_counter) - len_multiplicate_speed) // text_speed], True, "white")
+
+    screen.blit(snip1, (20, (SCREEN_BORDER)))
+    screen.blit(snip2, (20, (SCREEN_BORDER + 25)))
+
 
     draw_screen()
     clock.tick(TICK)

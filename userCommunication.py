@@ -1,13 +1,14 @@
 def level_1(text):
-    message = ""
+
     if text == "ja":
         message = "Vielen Dank! Bitte gib Deinen Vornamen in das Textfeld ein"
         new_input = True
     elif text == "nein":
-        message = "Das kann ich gut verstehen. Ich werde Dich einfach 'User' nennen.\n Wenn Du möchtest können wir jetzt weiter machen."
+        message = ['Das kann ich gut.',
+            'Wenn Du möchtest können wir jetzt weiter machen... ']
         new_input = False
     else:
-        message = "Ich habe Dich nicht verstanden."
+        message = ["Ich habe Dich nicht verstanden."]
         new_input = True
 
     return message, new_input
