@@ -13,11 +13,8 @@ screen_background = pygame.image.load("./Images/hintergrund.png")
 
 font = pygame.font.Font(DIALOG_FONT, 24)
 snip1 = font.render("", True, "white")
-#snip2 = font.render("", True, "white")
 text_counter = 0
-
-text_speed = 10
-
+text_speed = 5
 level = 1
 
 
@@ -34,29 +31,33 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    messages, new_input = create_message("Nein", level)
-    if text_counter == 0:
-        snip2 = font.render("", True, "white")
+    # User communication
+    messages, new_input = create_message("äh", level)
+    snips = []
 
+    len_all_messages = 0
 
-    if text_counter < (text_speed * (len(messages[0])) + (text_speed * len(messages[1]))):
+    # snips enthält einen Eintrag für jedes Elemten der Liste messges
+    snips = [font.render(message[0 : (text_counter // text_speed) + 1], True, "white") for message in messages]
+
+    # errechnet die Gesamtlänge aller Texte
+    for message in messages:
+        len_all_messages += len(message)
+    # text_counter muss weiterlaufen, bis der gesamte Text ausgegeben wurde
+    if text_counter < (len_all_messages * text_speed):
         text_counter += 1
-
-        snip1 = font.render(messages[0][0 : text_counter // text_speed], True, "white")
 
     len_multiplicate_speed = text_speed * len(messages[0])
     if (text_counter >= len_multiplicate_speed) and (
         text_counter < (text_speed * (len(messages[0])) + (text_speed * len(messages[1])))
     ):
-
         if text_counter - len_multiplicate_speed < (text_speed * len(messages[1])):
             text_counter += 1
 
-        snip2 = font.render(messages[1][0 : ((text_counter) - len_multiplicate_speed) // text_speed], True, "white")
-
-    screen.blit(snip1, (20, (SCREEN_BORDER)))
-    screen.blit(snip2, (20, (SCREEN_BORDER + 25)))
-
+    line_spacing = 0
+    for snip in snips:  # TODO Die Zeilen sollen nacheinander erscheinen
+        screen.blit(snip, (20, (SCREEN_BORDER + line_spacing)))
+        line_spacing += 25
 
     draw_screen()
     clock.tick(TICK)
