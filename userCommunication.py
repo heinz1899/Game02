@@ -9,7 +9,7 @@ def level_1(text):
         message = ['Das kann ich gut verstehen.', 'Wenn Du möchtest können wir jetzt weiter machen... ']
         new_input = False
     else:
-        message = ["Ich habe Dich nicht verstanden.", "Bitte antworte mit 'Ja' oder 'Nein'"]
+        message = ["Ich habe Dich nicht verstanden.", "Bitte antworte mit 'Ja' oder 'Nein'."]
         new_input = True
 
     return message, new_input
