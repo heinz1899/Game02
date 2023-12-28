@@ -12,10 +12,11 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGTH])
 screen_background = pygame.image.load("./Images/hintergrund.png")
 
 font = pygame.font.Font(DIALOG_FONT, 24)
-snip1 = font.render("", True, "white")
 text_counter = 0
-text_speed = 3
+text_speed = 5
 level = 1
+player = "user"
+input_text = f"{player}>: "
 
 
 def draw_screen() -> None:
@@ -25,22 +26,28 @@ def draw_screen() -> None:
 
 # ++++++++++++++++++++++++++++++++++ Game loop +++++++++++++++++++++++++++++++++++++++
 run = True
+text_counter = 0
 while run:
     pygame.draw.rect(screen, SCREEN_BACKGROUND_COLOR, [0, SCREEN_BORDER, SCREEN_WIDTH, SCREEN_HEIGTH])
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        # for user input
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSPACE:
+                input_text = input_text[:-1]
+            else:
+                input_text += event.unicode
 
-    # User communication
-    messages, new_input = create_message("nein", level)
-    # messages = ["Das ist die erste Zeile.", "Die zweite Zeile soll erst erscheinen, wenn die 1. fertig ist."]
+    # +++++++++ User communication start ++++++++++++
+
+    messages, new_input = create_message("ja", level)
 
     messages_lens = [len(m) for m in messages]
     len_all_messages = sum(messages_lens)
     text_counter_max = len_all_messages * text_speed
 
     # snips enthält einen Eintrag für jedes Elemten der Liste messges
-    # snips = [font.render(message[0 : (text_counter // text_speed) + 1], True, "white") for message in messages]
     snips = []
     characters_to_plot = text_counter // text_speed + 1
     for message in messages:
@@ -54,25 +61,25 @@ while run:
             text = ""
         snips.append(font.render(text, True, "white"))
 
-    print(snips)
     # text_counter muss weiterlaufen, bis der gesamte Text ausgegeben wurde
     if text_counter < (len_all_messages * text_speed):
         text_counter += 1
 
-    # text_counter_max = (text_speed * (len(messages[0])) + (text_speed * len(messages[1])))
-    len_multiplicate_speed = text_speed * len(messages[0])
-    if (text_counter >= len_multiplicate_speed) and (text_counter < text_counter_max):
-        if text_counter - len_multiplicate_speed < (text_speed * len(messages[1])):
-            text_counter += 1
-
     line_spacing = 0
-    # while text_counter <= text_counter_max:
 
-    for snip in snips:  # TODO Die Zeilen sollen nacheinander erscheinen
+    for snip in snips:
         screen.blit(snip, (20, (SCREEN_BORDER + line_spacing)))
         line_spacing += 25
 
-    print(f"a: {messages_lens}, b: {len_all_messages}, c: {text_counter_max}")
+    new_input = True
+    if new_input and text_counter >= (len_all_messages * text_speed):
+        input_surface = font.render(input_text, True, (40, 150, 0))
+        #input_surface = font.render("TEST", True, (40, 150, 0))
+        screen.blit(input_surface, (20, SCREEN_BORDER + line_spacing))
+
+
+    # +++++++++ User communication end ++++++++++++
+
     draw_screen()
     clock.tick(TICK)
 
