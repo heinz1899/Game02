@@ -1,3 +1,14 @@
+def level_0():
+    message = ["Hallo user, ich bin Dein persönlicher Assistent.", "Verrätst Du mir Deinen Vornamen?", ""]
+    new_input = True
+    # message = [
+    #     "Hallo user, ich bin Dein persönlicher Assistent. Verrätst Du mir Deinen Vornamen?",
+    #     "Schreibe einfach ja oder nein"
+    # ],
+    # new_input = True
+    return message, new_input
+
+
 def level_1(input_text):
     if input_text == "ja":
         message = ["Vielen Dank! Bitte gib Deinen Vornamen in das Textfeld ein.", ""]
@@ -14,6 +25,8 @@ def level_1(input_text):
 
 def create_message(input_text: str, level: int = 1) -> str:
     text = input_text.lower()
+    if level == 0:
+        message, new_input = level_0()
     if level == 1:
         message, new_input = level_1(text)
 
