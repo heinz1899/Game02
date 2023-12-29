@@ -14,10 +14,11 @@ screen_background = pygame.image.load("./Images/hintergrund.png")
 font = pygame.font.Font(DIALOG_FONT, 24)
 text_counter = 0
 text_speed = 5
-level = 0
+communication_counter = 0
 user_communication = True
 player = "user"
-input_text = f"{player}>: "
+player_prompt = f"{player}>: "
+input_text = ""
 player_text = ""
 
 
@@ -35,22 +36,19 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         # for user input
-        #if user_communication:
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_BACKSPACE:
-                input_text = input_text[:-1]
-            elif event.key == pygame.K_RETURN:
-                print(f"input_text: {input_text}")
-                player_text = input_text
-                level += 1
-                create_message(player_text, level)
-
-            else:
-                input_text += event.unicode
+        if user_communication:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    input_text = input_text[:-1]
+                elif event.key == pygame.K_RETURN:
+                    player_text = input_text
+                    communication_counter += 1
+                else:
+                    input_text += event.unicode
 
     # +++++++++ User communication start ++++++++++++
-
-    messages, new_input = create_message(player_text, level)
+    print(f"player_text: {player_text}")
+    messages, new_input = create_message(player_text, communication_counter)
 
     messages_lens = [len(m) for m in messages]
     len_all_messages = sum(messages_lens)
@@ -82,7 +80,7 @@ while run:
 
     new_input = True
     if new_input and text_counter >= (len_all_messages * text_speed):
-        input_surface = font.render(input_text, True, (40, 150, 0))
+        input_surface = font.render(f"{player_prompt} {input_text}", True, (40, 150, 0))
         screen.blit(input_surface, (20, SCREEN_BORDER + line_spacing))
 
 

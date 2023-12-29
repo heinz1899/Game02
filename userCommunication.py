@@ -1,4 +1,4 @@
-def level_0():
+def communication_0():
     message = ["Hallo user, ich bin Dein persönlicher Assistent.", "Verrätst Du mir Deinen Vornamen?", ""]
     new_input = True
     # message = [
@@ -9,7 +9,7 @@ def level_0():
     return message, new_input
 
 
-def level_1(input_text):
+def communication_1(input_text):
     if input_text == "ja":
         message = ["Vielen Dank! Bitte gib Deinen Vornamen in das Textfeld ein.", ""]
         new_input = True
@@ -23,11 +23,11 @@ def level_1(input_text):
     return message, new_input
 
 
-def create_message(input_text: str, level: int = 1) -> str:
-    text = input_text.lower()
+def create_message(input_text: str, level: int):
+    text = input_text.strip().lower()
     if level == 0:
-        message, new_input = level_0()
+        message, new_input = communication_0()
     if level == 1:
-        message, new_input = level_1(text)
+        message, new_input = communication_1(text)
 
     return message, new_input
