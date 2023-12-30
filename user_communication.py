@@ -1,3 +1,6 @@
+from player import player
+
+
 def communication_0():
     message = [
         "Hallo user, ich bin Dein persönlicher Assistent.",
@@ -26,31 +29,32 @@ def communication_1(input_text):
 
     return message, new_input
 
-
-def communication_2(player_name: str):
-    player_name = player_name.strip().capitalize()
+def communication_2(player_name: str) -> any:
+    player.name = player_name.strip().capitalize()
     message = [
-        f"{player_name} ist ein sehr schöner Name!",
+        f"{player.name} ist ein sehr schöner Name!",
         "Er erinnert mich an jemanden den ich vor langer Zeit gekannt habe",
         "Wie möchtest Du angesprochen werden?",
-        f"A) Liebe {player_name}",
-        f"B) Lieber {player_name}",
-        f"C) Liebes {player_name}",
+        f"A) Liebe {player.name}",
+        f"B) Lieber {player.name}",
+        f"C) Liebes {player.name}",
         "Gib den Buchstaben Deiner Wahl ein.",
     ]
     new_input = True
     return message, new_input
 
 
-def communication_3(gender):
+def communication_3(gender: str) -> player.sex:
     if gender == "A":
-        player_sex = "male"
+        player.sex = "male"
     if gender == "B":
-        player_sex = "female"
+        player.sex = "female"
     if gender == "C":
-        player_sex = "divers"
+        player.sex = "divers"
+    message = ["Alles klar, so machen wir's"]
+    new_input = False
 
-    return player_sex
+    return message, new_input
 
 
 def create_message(input_text: str, communication_counter: int) -> any:

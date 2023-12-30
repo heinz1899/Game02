@@ -1,7 +1,7 @@
 import pygame
-from userCommunication import create_message
+from user_communication import create_message
 from constants import SCREEN_WIDTH, SCREEN_HEIGTH, SCREEN_TITLE, SCREEN_BACKGROUND_COLOR, SCREEN_BORDER, TICK, DIALOG_FONT
-
+from player import player
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -16,21 +16,8 @@ text_counter = 0
 text_speed = 3
 communication_counter = 0
 user_communication = True
-player = "user"
-player_sex = 'male'
-player_prompt = f"{player}>: "
 input_text = ""  # verändert sich während der Eingabe
 player_text = ""  # input nach Bestätigung mit Return
-
-
-# class Character:
-#     def __init__(self, name: str = "user", sex: str = "divers") -> None:
-#         self.name = name
-#         self.sex = sex
-
-
-# player = Character()
-
 
 def draw_screen() -> None:
     screen.blit(screen_background, (0, 0))
@@ -93,11 +80,12 @@ while run:
 
     new_input = True
     if new_input and text_counter >= (len_all_messages * text_speed):
-        input_surface = font.render(f"{player_prompt} {input_text}", True, (40, 150, 0))
+        input_surface = font.render(f"{player.prompt} {input_text}", True, (40, 150, 0))
         screen.blit(input_surface, (20, SCREEN_BORDER + line_spacing))
 
     # +++++++++ User communication end ++++++++++++
 
+    print(player)
     draw_screen()
     clock.tick(TICK)
 
