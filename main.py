@@ -13,13 +13,23 @@ screen_background = pygame.image.load("./Images/hintergrund.png")
 
 font = pygame.font.Font(DIALOG_FONT, 24)
 text_counter = 0
-text_speed = 5
+text_speed = 3
 communication_counter = 0
 user_communication = True
 player = "user"
+player_sex = 'male'
 player_prompt = f"{player}>: "
-input_text = ""
-player_text = ""
+input_text = ""  # verändert sich während der Eingabe
+player_text = ""  # input nach Bestätigung mit Return
+
+
+# class Character:
+#     def __init__(self, name: str = "user", sex: str = "divers") -> None:
+#         self.name = name
+#         self.sex = sex
+
+
+# player = Character()
 
 
 def draw_screen() -> None:
@@ -42,13 +52,15 @@ while run:
                     input_text = input_text[:-1]
                 elif event.key == pygame.K_RETURN:
                     player_text = input_text
+                    text_counter = 0
                     communication_counter += 1
                 else:
                     input_text += event.unicode
 
     # +++++++++ User communication start ++++++++++++
-    print(f"player_text: {player_text}")
     messages, new_input = create_message(player_text, communication_counter)
+    if input_text == player_text:
+        input_text = ""
 
     messages_lens = [len(m) for m in messages]
     len_all_messages = sum(messages_lens)
@@ -64,6 +76,7 @@ while run:
         elif characters_to_plot > 0:
             text = message[:characters_to_plot]
             characters_to_plot = 0
+
         else:
             text = ""
         snips.append(font.render(text, True, "white"))
@@ -82,7 +95,6 @@ while run:
     if new_input and text_counter >= (len_all_messages * text_speed):
         input_surface = font.render(f"{player_prompt} {input_text}", True, (40, 150, 0))
         screen.blit(input_surface, (20, SCREEN_BORDER + line_spacing))
-
 
     # +++++++++ User communication end ++++++++++++
 
