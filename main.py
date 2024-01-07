@@ -1,14 +1,18 @@
+
 import pygame
+from board_text import board_text
 from user_communication import create_message
-from constants import SCREEN_WIDTH, SCREEN_HEIGTH, SCREEN_TITLE, SCREEN_BACKGROUND_COLOR, SCREEN_BORDER, TICK, DIALOG_FONT
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_BACKGROUND_COLOR, SCREEN_BORDER, TICK, DIALOG_FONT, BOARDS_FONT
 from player import player
+from games import schocken
+
 
 pygame.init()
 clock = pygame.time.Clock()
 
 # Screen
 pygame.display.set_caption(SCREEN_TITLE)
-screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGTH])
+screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 screen_background = pygame.image.load("./Images/hintergrund.png")
 
 font = pygame.font.Font(DIALOG_FONT, 24)
@@ -19,16 +23,12 @@ user_communication = True
 input_text = ""  # verändert sich während der Eingabe
 player_text = ""  # input nach Bestätigung mit Return
 
-def draw_screen() -> None:
-    screen.blit(screen_background, (0, 0))
-    pygame.display.update()
-
 
 # ++++++++++++++++++++++++++++++++++ Game loop +++++++++++++++++++++++++++++++++++++++
 run = True
 text_counter = 0
 while run:
-    pygame.draw.rect(screen, SCREEN_BACKGROUND_COLOR, [0, SCREEN_BORDER, SCREEN_WIDTH, SCREEN_HEIGTH])
+    pygame.draw.rect(screen, SCREEN_BACKGROUND_COLOR, [0, SCREEN_BORDER, SCREEN_WIDTH, SCREEN_HEIGHT])
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -85,8 +85,15 @@ while run:
 
     # +++++++++ User communication end ++++++++++++
 
-    print(player)
-    draw_screen()
+    # background picture
+    screen.blit(screen_background, (0, 0))
+
+    schocken.info_draw(screen)
+
+    pygame.display.update()
+
+
+
     clock.tick(TICK)
 
 pygame.quit()
