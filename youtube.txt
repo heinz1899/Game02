@@ -1,1 +1,8 @@
 Input Text: https://www.youtube.com/watch?v=Rvcyf4HsWiw
+
+
+Pygame zeichnet ein transparentes Rechteck
+s = pygame.Surface((1000,750)) # die Größe Ihres Rechtecks
+s.set_alpha(128) # Alpha-Level
+s.fill((255,255,255)) # Dies füllt die gesamte Oberfläche
+windowSurface.blit(s, (0,0)) # (0,0) sind die Koordinaten oben links

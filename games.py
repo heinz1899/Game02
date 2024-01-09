@@ -1,25 +1,40 @@
 import pygame
-from board_text import board_text
-from constants import BOARDS_FONT
+from constants import BOARD_FONT
+from random import randint
+from game_text import rules
+from constants import SCREEN_BORDER, SCREEN_WIDTH
+
+
 
 pygame.init()
 
 
-class Game:
-    def __init__(self, x: int, y: int, height: int, width: int, text: list) -> None:
-        self.rect = pygame.Rect(x, y, height, width)
-        self.text = text
-        self.font = pygame.font.Font(BOARDS_FONT, 24)
-        self.x = x
-        self.y = y
+class Schocken:
+    def __init__(self) -> None:
+        self.dice_number = 3
+        self.dice_sides = 6
+        self.rules = rules["schocken"]
+        self.font_size = 32
+        self.font = pygame.font.Font(BOARD_FONT, self.font_size)
 
-    def info_draw(self, surface):
+    def roll_dice(self):
+        return randint(1, self.dice_sides)
+
+    def rules_draw(self, surface):
+        font_size = self.font_size
         line_space = 0
-        for i in range(len(self.text)):
-            img = self.font.render(self.text[i], True, "black")
-            surface.blit(img, (50, (60 + line_space)))
-            line_space += 32
+
+        rules_rect = pygame.Surface((SCREEN_WIDTH, SCREEN_BORDER))
+        rules_rect.set_alpha(150)
+        rules_rect.fill((255, 255, 200))
+        surface.blit(rules_rect, (0, 0))
+
+        for i in range(len(self.rules)):
+            txt = self.font.render(self.rules[i], True, "black")
+            surface.blit(txt, (50, (60 + line_space)))
+            line_space += font_size
+
+        return None
 
 
-
-schocken = Game(0, 0, 100, 200, board_text["schocken"])
+schocken = Schocken()

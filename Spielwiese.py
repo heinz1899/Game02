@@ -1,5 +1,5 @@
 import pygame
-import board_text
+import game_text
 from games import schocken_info
 
 

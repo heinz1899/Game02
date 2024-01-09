@@ -1,8 +1,7 @@
-
 import pygame
-from board_text import board_text
 from user_communication import create_message
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_BACKGROUND_COLOR, SCREEN_BORDER, TICK, DIALOG_FONT, BOARDS_FONT
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_BACKGROUND_COLOR, SCREEN_BORDER, TICK
+from constants import DIALOG_FONT
 from player import player
 from games import schocken
 
@@ -15,14 +14,19 @@ pygame.display.set_caption(SCREEN_TITLE)
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 screen_background = pygame.image.load("./Images/hintergrund.png")
 
+# user communication
+user_communication = True
 font = pygame.font.Font(DIALOG_FONT, 24)
 text_counter = 0
 text_speed = 3
 communication_counter = 0
-user_communication = True
+new_input = True  # Bei True ist user-input möglich
 input_text = ""  # verändert sich während der Eingabe
 player_text = ""  # input nach Bestätigung mit Return
 
+# Games
+games = [None, "schocken"]
+game = games[1]
 
 # ++++++++++++++++++++++++++++++++++ Game loop +++++++++++++++++++++++++++++++++++++++
 run = True
@@ -41,13 +45,12 @@ while run:
                     player_text = input_text
                     text_counter = 0
                     communication_counter += 1
+                    input_text = ""
                 else:
                     input_text += event.unicode
 
     # +++++++++ User communication start ++++++++++++
     messages, new_input = create_message(player_text, communication_counter)
-    if input_text == player_text:
-        input_text = ""
 
     messages_lens = [len(m) for m in messages]
     len_all_messages = sum(messages_lens)
@@ -78,7 +81,7 @@ while run:
         screen.blit(snip, (20, (SCREEN_BORDER + line_spacing)))
         line_spacing += 25
 
-    new_input = True
+    #  input Prombt
     if new_input and text_counter >= (len_all_messages * text_speed):
         input_surface = font.render(f"{player.prompt} {input_text}", True, (40, 150, 0))
         screen.blit(input_surface, (20, SCREEN_BORDER + line_spacing))
@@ -88,11 +91,10 @@ while run:
     # background picture
     screen.blit(screen_background, (0, 0))
 
-    schocken.info_draw(screen)
+    if game == "schocken":
+        schocken.rules_draw(screen)
 
     pygame.display.update()
-
-
 
     clock.tick(TICK)
 
