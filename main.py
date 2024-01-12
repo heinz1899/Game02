@@ -1,22 +1,22 @@
-import pygame
+import pygame as pg
 from user_communication import create_message
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_BACKGROUND_COLOR, SCREEN_BORDER, TICK
 from constants import DIALOG_FONT
 from player import player
-from games import schocken
+from schocken import Schocken
 
 
-pygame.init()
-clock = pygame.time.Clock()
+pg.init()
+clock = pg.time.Clock()
 
 # Screen
-pygame.display.set_caption(SCREEN_TITLE)
-screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-screen_background = pygame.image.load("./Images/hintergrund.png")
+pg.display.set_caption(SCREEN_TITLE)
+screen = pg.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+screen_background_start = pg.image.load("./Images/hintergrund.png")
 
 # user communication
 user_communication = True
-font = pygame.font.Font(DIALOG_FONT, 24)
+font = pg.font.Font(DIALOG_FONT, 24)
 text_counter = 0
 text_speed = 3
 communication_counter = 0
@@ -25,6 +25,7 @@ input_text = ""  # verändert sich während der Eingabe
 player_text = ""  # input nach Bestätigung mit Return
 
 # Games
+group_elements = pg.sprite.Group()
 games = [None, "schocken"]
 game = games[1]
 
@@ -32,16 +33,16 @@ game = games[1]
 run = True
 text_counter = 0
 while run:
-    pygame.draw.rect(screen, SCREEN_BACKGROUND_COLOR, [0, SCREEN_BORDER, SCREEN_WIDTH, SCREEN_HEIGHT])
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    pg.draw.rect(screen, SCREEN_BACKGROUND_COLOR, [0, SCREEN_BORDER, SCREEN_WIDTH, SCREEN_HEIGHT])
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
             run = False
         # for user input
         if user_communication:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_BACKSPACE:
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_BACKSPACE:
                     input_text = input_text[:-1]
-                elif event.key == pygame.K_RETURN:
+                elif event.key == pg.K_RETURN:
                     player_text = input_text
                     text_counter = 0
                     communication_counter += 1
@@ -86,16 +87,22 @@ while run:
         input_surface = font.render(f"{player.prompt} {input_text}", True, (40, 150, 0))
         screen.blit(input_surface, (20, SCREEN_BORDER + line_spacing))
 
-    # +++++++++ User communication end ++++++++++++
+    # ++++++++++++++++++++++++++ User communication end +++++++++++++++++++++++++++
 
     # background picture
-    screen.blit(screen_background, (0, 0))
+    screen.blit(screen_background_start, (40, 0))
 
+    # +++++++++++++++++++++++++++++++++++ Games +++++++++++++++++++++++++++++++++++
+    # +++++++++++++++++ Schocken ++++++++++++++++++
+    schocken = Schocken()
     if game == "schocken":
-        schocken.rules_draw(screen)
+        if not schocken.started:
+            schocken.rules_draw(screen)
 
-    pygame.display.update()
+
+
+    pg.display.update()
 
     clock.tick(TICK)
 
-pygame.quit()
+pg.quit()

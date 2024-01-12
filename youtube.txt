@@ -1,4 +1,5 @@
 Input Text: https://www.youtube.com/watch?v=Rvcyf4HsWiw
+fünf_Würfel_Spiel: https://www.youtube.com/watch?v=d24iDGN5QC8&t=1119s
 
 
 Pygame zeichnet ein transparentes Rechteck
