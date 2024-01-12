@@ -97,7 +97,8 @@ while run:
     schocken = Schocken()
     if game == "schocken":
         if not schocken.started:
-            schocken.rules_draw(screen)
+            # schocken.rules_draw(screen)
+            schocken.draw(screen)
 
 
 

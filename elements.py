@@ -4,7 +4,7 @@ pg.init()
 
 
 class Element(pg.sprite.Sprite):
-    def __init__(self, number: int, typ: any, image: str, pos: list, enabled: bool) -> any:
+    def __init__(self, number: int, typ: str, image: str, pos: tuple, enabled: bool) -> any:
         super().__init__()
         self.id = number
         self.typ = typ

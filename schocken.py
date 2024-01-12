@@ -1,4 +1,5 @@
 import pygame as pg
+from elements import Element
 
 # from pygame.sprite import Group
 from constants import BOARD_FONT
@@ -24,9 +25,6 @@ class Element(pg.sprite.Sprite):
         self.selected = False
 
 
-
-
-
 class Schocken:
     def __init__(self) -> None:
         self.dice_number = 3
@@ -34,8 +32,9 @@ class Schocken:
         self.started = False
         self.font_size = 32
         self.font = pg.font.Font(BOARD_FONT, self.font_size)
-        self.image_dices_e = [pg.image.load(f"Images/dices/{i + 1}_e.png") for i in range(6)]
-        self.image_dices_d = [pg.image.load(f"Images/dices/{i + 1}_d.png") for i in range(6)]
+        self.path = "Images/dices/"
+        # self.image_dices_e = [pg.image.load(f"{self.path}{i + 1}_e.png") for i in range(6)]
+        # self.image_dices_d = [pg.image.load(f"{self.path}{i + 1}_d.png") for i in range(6)]
         self.group_elements = pg.sprite.Group()
 
     def rules_draw(self, surface):
@@ -52,9 +51,13 @@ class Schocken:
             surface.blit(txt, (50, (60 + line_space)))
             line_space += font_size
 
+    def dices(self):
+        for i in range(1, 4):
+            pos = (445 + (90 * i - 1), 450)
+            self.group_elements.add(Element(i, "dices", f"{self.path}{i}", pos, True))
+
     def draw(self, surface):
-        group_elements.draw(surface)
-
-
+        self.dices()
+        self.group_elements.draw(surface)
 
         return None
