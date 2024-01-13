@@ -1,6 +1,5 @@
 from player import player
 
-
 def communication_0():
     message = [
         "Hallo user, ich bin Dein persönlicher Assistent.",
@@ -13,7 +12,7 @@ def communication_0():
     #     "Schreibe einfach ja oder nein"
     # ],
     # new_input = True
-    return message, new_input
+    return message, new_input,
 
 
 def communication_1(input_text):
@@ -33,25 +32,26 @@ def communication_2(player_name: str) -> any:
     player.name = player_name.strip().capitalize()
     message = [
         f"{player.name} ist ein sehr schöner Name!",
-        "Er erinnert mich an jemanden den ich vor langer Zeit gekannt habe",
-        "Wie möchtest Du angesprochen werden?",
-        f"A) Liebe {player.name}",
-        f"B) Lieber {player.name}",
-        f"C) Liebes {player.name}",
-        "Gib den Buchstaben Deiner Wahl ein.",
+        "Er erinnert mich an jemanden den ich vor langer Zeit gekannt habe, Wie möchtest",
+        f"Du angesprochen werden? A) Liebe, B) Lieber oder C) Liebes {player.name}",
     ]
     new_input = True
     return message, new_input
 
 
-def communication_3(gender: str) -> player.sex:
-    if gender == "A":
-        player.sex = "male"
-    if gender == "B":
+def communication_3(gender: str) -> any:
+    if gender == "a":
         player.sex = "female"
-    if gender == "C":
+        message = [f"Alles klar liebe {player.name}"]
+    elif gender == "b":
+        player.sex = "male"
+        message = [f"Alles klar lieber {player.name}"]
+    elif gender == "c":
         player.sex = "divers"
-    message = ["Alles klar, so machen wir's"]
+        message = [f"Alles klar liebes {player.name}"]
+    else:
+        communication_2(player.name)
+
     new_input = False
 
     return message, new_input
