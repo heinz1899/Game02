@@ -1,7 +1,7 @@
 import pygame as pg
 from user_communication import create_message
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_BACKGROUND_COLOR, SCREEN_BORDER, TICK
-from constants import DIALOG_FONT
+from constants import DIALOG_FONT, LINE_SPACING
 from player import player
 from schocken import Schocken
 
@@ -26,8 +26,8 @@ player_text = ""  # input nach Bestätigung mit Return
 
 # Games
 group_elements = pg.sprite.Group()
-games = [None, "schocken"]
-game = games[1]
+games = {"none": None, "schocken": "schocken", "five_dices": "five_dices"}
+game = games["schocken"]
 
 # ++++++++++++++++++++++++++++++++++ Game loop +++++++++++++++++++++++++++++++++++++++
 run = True
@@ -67,7 +67,6 @@ while run:
         elif characters_to_plot > 0:
             text = message[:characters_to_plot]
             characters_to_plot = 0
-
         else:
             text = ""
         snips.append(font.render(text, True, "white"))
@@ -76,16 +75,13 @@ while run:
     if text_counter < (len_all_messages * text_speed):
         text_counter += 1
 
-    line_spacing = 0
-
-    for snip in snips:
-        screen.blit(snip, (20, (SCREEN_BORDER + line_spacing)))
-        line_spacing += 25
+    for i, snip in enumerate(snips):
+        screen.blit(snip, (20, (SCREEN_BORDER + (i * LINE_SPACING))))
 
     #  input Prombt
     if new_input and text_counter >= (len_all_messages * text_speed):
-        input_surface = font.render(f"{player.prompt} {input_text}", True, (40, 150, 0))
-        screen.blit(input_surface, (20, SCREEN_BORDER + line_spacing))
+        input_surface = font.render(f"{player.prompt} {input_text}", True, color=(40, 150, 0))
+        screen.blit(input_surface, (20, SCREEN_BORDER + LINE_SPACING))
 
     # ++++++++++++++++++++++++++ User communication end +++++++++++++++++++++++++++
 
@@ -94,8 +90,8 @@ while run:
 
     # +++++++++++++++++++++++++++++++++++ Games +++++++++++++++++++++++++++++++++++
     # +++++++++++++++++ Schocken ++++++++++++++++++
-    schocken = Schocken()
     if game == "schocken":
+        schocken = Schocken()
         if not schocken.started:
             # schocken.rules_draw(screen)
             schocken.draw(screen)

@@ -11,3 +11,4 @@ SCREEN_BORDER = 600  # border between image and text
 # User communication
 DIALOG_FONT = "Fonts/CutiveMono-Regular.ttf"
 BOARD_FONT = "Fonts/Kanit/Kanit-Bold.ttf"
+LINE_SPACING = 25

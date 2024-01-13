@@ -4,7 +4,6 @@ from elements import Element
 # from pygame.sprite import Group
 from constants import BOARD_FONT
 from constants import SCREEN_BORDER, SCREEN_WIDTH
-from random import randint
 from game_text import rules
 
 
@@ -22,7 +21,7 @@ class Schocken:
         # self.image_dices_d = [pg.image.load(f"{self.path}{i + 1}_d.png") for i in range(6)]
         self.group_elements = pg.sprite.Group()
 
-    def rules_draw(self, surface):
+    def rules_draw(self, surface: pg.surface) -> None:
         font_size = self.font_size
         line_space = 0
 
@@ -36,13 +35,11 @@ class Schocken:
             surface.blit(txt, (50, (60 + line_space)))
             line_space += font_size
 
-    def dices(self):
+    def dices(self) -> None:
         for i in range(1, 4):
             pos = (445 + (90 * i - 1), 450)
             self.group_elements.add(Element(i, "dices", f"{self.path}{i}", pos, True))
 
-    def draw(self, surface):
+    def draw(self, surface: pg.surface) -> None:
         self.dices()
         self.group_elements.draw(surface)
-
-        return None
