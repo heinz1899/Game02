@@ -39,23 +39,24 @@ def communication_2(player_name: str) -> tuple[str, bool]:
     return message, new_input, next_message
 
 
-def communication_3(gender: str) -> tuple[str, bool]:
+def communication_3(gender: str) -> tuple[str, bool, int]:
+    new_input = False
+    next_message = None
     if gender == "a":
         player.sex = "female"
         message = [f"Alles klar liebe {player.name}"]
-        next_message = 4
     elif gender == "b":
         player.sex = "male"
         message = [f"Alles klar lieber {player.name}"]
-        next_message = 4
     elif gender == "c":
         player.sex = "divers"
         message = [f"Alles klar liebes {player.name}"]
-        next_message = 4
     else:
-        next_message = 2
+        message = ["Gib A, B oder C ein"]
+        next_message = 3
+        new_input = True
 
-    new_input = False
+
 
     return message, new_input, next_message
 

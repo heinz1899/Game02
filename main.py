@@ -47,7 +47,6 @@ while run:
                     player_text = input_text
                     text_counter = 0
                     communication_counter = next_message
-                    print(f"commmunication counter: {communication_counter}")
                     input_text = ""
                 else:
                     input_text += event.unicode
