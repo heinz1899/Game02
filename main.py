@@ -20,6 +20,7 @@ font = pg.font.Font(DIALOG_FONT, 24)
 text_counter = 0
 text_speed = 3
 communication_counter = 0
+next_message = 0
 new_input = True  # Bei True ist user-input möglich
 input_text = ""  # verändert sich während der Eingabe
 player_text = ""  # input nach Bestätigung mit Return
@@ -45,13 +46,14 @@ while run:
                 elif event.key == pg.K_RETURN:
                     player_text = input_text
                     text_counter = 0
-                    communication_counter += 1
+                    communication_counter = next_message
+                    print(f"commmunication counter: {communication_counter}")
                     input_text = ""
                 else:
                     input_text += event.unicode
 
     # +++++++++ User communication start ++++++++++++
-    messages, new_input = create_message(player_text, communication_counter)
+    messages, new_input, next_message = create_message(player_text, communication_counter)
 
     messages_lens = [len(m) for m in messages]
     len_all_messages = sum(messages_lens)
@@ -74,14 +76,16 @@ while run:
     # text_counter muss weiterlaufen, bis der gesamte Text ausgegeben wurde
     if text_counter < (len_all_messages * text_speed):
         text_counter += 1
-
+    lines = 0
     for i, snip in enumerate(snips):
         screen.blit(snip, (20, (SCREEN_BORDER + (i * LINE_SPACING))))
+        lines += 1
 
     #  input Prombt
     if new_input and text_counter >= (len_all_messages * text_speed):
-        input_surface = font.render(f"{player.prompt} {input_text}", True, color=(40, 150, 0))
-        screen.blit(input_surface, (20, SCREEN_BORDER + LINE_SPACING))
+        input_surface = font.render(f"{player.prompt} {input_text}", True, (40, 150, 0))
+        screen.blit(input_surface, (20, SCREEN_BORDER + (LINE_SPACING * lines)))
+        lines = 0
 
     # ++++++++++++++++++++++++++ User communication end +++++++++++++++++++++++++++
 

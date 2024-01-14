@@ -17,8 +17,6 @@ class Schocken:
         self.font_size = 32
         self.font = pg.font.Font(BOARD_FONT, self.font_size)
         self.path = "Images/dices/"
-        # self.image_dices_e = [pg.image.load(f"{self.path}{i + 1}_e.png") for i in range(6)]
-        # self.image_dices_d = [pg.image.load(f"{self.path}{i + 1}_d.png") for i in range(6)]
         self.group_elements = pg.sprite.Group()
 
     def rules_draw(self, surface: pg.surface) -> None:
