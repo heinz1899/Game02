@@ -99,8 +99,6 @@ while run:
             # schocken.rules_draw(screen)
             schocken.draw(screen)
 
-
-
     pg.display.update()
 
     clock.tick(TICK)
