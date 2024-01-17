@@ -1,5 +1,5 @@
 # Game settings
-TICK = 60
+TICK = 40
 
 # Screen settings
 SCREEN_WIDTH = 1280

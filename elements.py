@@ -4,9 +4,9 @@ pg.init()
 
 
 class Element(pg.sprite.Sprite):
-    def __init__(self, number: int, typ: str, image: str, pos: tuple, enabled: bool) -> any:
+    def __init__(self, id: int, typ: str, image: str, pos: tuple, enabled: bool) -> None:
         super().__init__()
-        self.id = number
+        self.id = id
         self.typ = typ
         self.image_enabled = pg.image.load(image + '_e.png')
         self.image_disabled = pg.image.load(image + '_d.png')
@@ -15,3 +15,7 @@ class Element(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = pos
         self.selected = False
+
+    # def change_enabled(self, t):
+    #     self.enabled = t
+    #     self.image = self.image_e.copy() if enabled else self.image_d.copy()

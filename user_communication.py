@@ -52,7 +52,10 @@ def communication_3(gender: str) -> tuple[str, bool, int]:
         player.sex = "divers"
         message = [f"Alles klar liebes {player.name}"]
     else:
-        message = ["Gib A, B oder C ein"]
+        message = [
+            f"Gib A für Liebe {player.name}, B für Lieber {player.name}",
+            f"oder C für Liebes {player.name} ein."
+        ]
         next_message = 3
         new_input = True
 

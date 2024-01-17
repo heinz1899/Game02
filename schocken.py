@@ -1,13 +1,12 @@
 import pygame as pg
 from elements import Element
-
-# from pygame.sprite import Group
 from constants import BOARD_FONT
 from constants import SCREEN_BORDER, SCREEN_WIDTH
 from game_text import rules
 
 
 pg.init()
+
 
 class Schocken:
     def __init__(self) -> None:
@@ -16,28 +15,38 @@ class Schocken:
         self.started = False
         self.font_size = 32
         self.font = pg.font.Font(BOARD_FONT, self.font_size)
-        self.path = "Images/dices/"
-        self.group_elements = pg.sprite.Group()
+        self.path = 'Images/'
+
+
+    def background(self, surface):
+        schocken_rect = pg.Surface((SCREEN_WIDTH, SCREEN_BORDER))
+        schocken_rect.set_alpha(150)
+        schocken_rect.fill((100, 255, 100))
+        surface.blit(schocken_rect, (0, 0))
 
     def rules_draw(self, surface: pg.surface) -> None:
         font_size = self.font_size
         line_space = 0
-
-        rules_rect = pg.Surface((SCREEN_WIDTH, SCREEN_BORDER))
-        rules_rect.set_alpha(150)
-        rules_rect.fill((255, 255, 200))
-        surface.blit(rules_rect, (0, 0))
-
         for i in range(len(self.rules)):
             txt = self.font.render(self.rules[i], True, "black")
             surface.blit(txt, (50, (60 + line_space)))
             line_space += font_size
 
-    def dices(self) -> None:
+    def add_elements(self, group):
         for i in range(1, 4):
-            pos = (445 + (90 * i - 1), 450)
-            self.group_elements.add(Element(i, "dices", f"{self.path}{i}", pos, True))
+            pos = (445 + (90 * i - 1), 100)
+            group.add(Element(i, "Dice", f"Images/dices/{i}", pos, True))
+
+        for n in range(3):
+            pos = [(200, 100), (815, 100), (506, 300)]
+            enabled = n == 0
+            group.add(Element(n, 'Button', f'{self.path}buttons/Button{n}', pos[n], enabled))
+
+
+
+
+
+
 
     def draw(self, surface: pg.surface) -> None:
-        self.dices()
         self.group_elements.draw(surface)
