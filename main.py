@@ -34,11 +34,20 @@ def clicked_button(element):
     if element.id == 0:
         start_dice_animation(element)
 
+def clicked_dice(element):  # schocken
+    print(element.id)
+    element.selected = not element.selected
+    element.image = image_dice_disabled[element.id - 1] if element.selected else image_dice_enabled[element.id - 1]
+
 # Dice
 def start_dice_animation(element):
     global animate_dice
+    global dice_counter
     pg.time.set_timer(pg.USEREVENT, 1000, True)
     animate_dice = True
+    dice_counter += 1
+    if dice_counter >= 3:
+        element.change_enabled(False)
 
 def roll_dice():
     for element in group_elemente:
@@ -58,7 +67,8 @@ image_dice_enabled = [pg.image.load(f"./Images/dices/{i + 1}_e.png") for i in ra
 image_dice_disabled = [pg.image.load(f"./Images/dices/{i + 1}_d.png") for i in range(6)]
 if game == "schocken":
     schocken = Schocken()
-    animate_dice = False
+    animate_dice = True
+    dice_counter = 1  # zum zählen der Würfe
     schocken.add_elements(group_elemente)
     schocken.started = True
 
@@ -66,6 +76,7 @@ if game == "schocken":
 run = True
 text_counter = 0
 while run:
+    # event handle
     pg.draw.rect(screen, SCREEN_BACKGROUND_COLOR, [0, SCREEN_BORDER, SCREEN_WIDTH, SCREEN_HEIGHT])
     for event in pg.event.get():
         if event.type == pg.USEREVENT:
@@ -91,6 +102,8 @@ while run:
                 else:
                     if element.typ == "Button":
                         clicked_button(element)
+                    if element.typ == "Dice":
+                        clicked_dice(element)
 
     # +++++++++ User communication start ++++++++++++
     messages, new_input, next_message = create_message(player_text, communication_counter)
@@ -133,13 +146,16 @@ while run:
     screen.blit(screen_background_start, (40, 0))
 
     # +++++++++++++++++++++++++++++++++++ Games +++++++++++++++++++++++++++++++++++
-    # +++++++++++++++++ Schocken ++++++++++++++++++
+
+    # ++++++++++ Schocken start
     if game == "schocken":
         schocken.background(screen)
-        schocken.rules_draw(screen)
         if schocken.started:
             if animate_dice:
                 roll_dice()
+        else:
+            schocken.rules_draw(screen)
+    # +++++++++++ Schocken end
 
     group_elemente.draw(screen)
     pg.display.update()

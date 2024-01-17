@@ -41,12 +41,3 @@ class Schocken:
             pos = [(200, 100), (815, 100), (506, 300)]
             enabled = n == 0
             group.add(Element(n, 'Button', f'{self.path}buttons/Button{n}', pos[n], enabled))
-
-
-
-
-
-
-
-    def draw(self, surface: pg.surface) -> None:
-        self.group_elements.draw(surface)

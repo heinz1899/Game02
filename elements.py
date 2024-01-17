@@ -16,6 +16,6 @@ class Element(pg.sprite.Sprite):
         self.rect.topleft = pos
         self.selected = False
 
-    # def change_enabled(self, t):
-    #     self.enabled = t
-    #     self.image = self.image_e.copy() if enabled else self.image_d.copy()
+    def change_enabled(self, enable_status):
+        self.enabled = enable_status
+        self.image = self.image_enabled.copy() if self.enabled else self.image_disabled.copy()
