@@ -35,7 +35,6 @@ def clicked_button(element):
         start_dice_animation(element)
 
 def clicked_dice(element):  # schocken
-    print(element.id)
     element.selected = not element.selected
     element.image = image_dice_disabled[element.id - 1] if element.selected else image_dice_enabled[element.id - 1]
 
@@ -59,9 +58,10 @@ def roll_dice():
         element.image = element.image_enabled
 
 
+
 # Games
 games = {"none": None, "schocken": "schocken", "five_dices": "five_dices"}
-
+# ------------------------------------------
 game = games["schocken"]
 image_dice_enabled = [pg.image.load(f"./Images/dices/{i + 1}_e.png") for i in range(6)]
 image_dice_disabled = [pg.image.load(f"./Images/dices/{i + 1}_d.png") for i in range(6)]
@@ -71,6 +71,7 @@ if game == "schocken":
     dice_counter = 1  # zum zählen der Würfe
     schocken.add_elements(group_elemente)
     schocken.started = True
+# --------------------------------------------
 
 # ++++++++++++++++++++++++++++++++++ Game loop +++++++++++++++++++++++++++++++++++++++
 run = True
@@ -102,6 +103,7 @@ while run:
                 else:
                     if element.typ == "Button":
                         clicked_button(element)
+                        print(schocken.punkte_ermitteln("number", group_elemente, dice_counter))
                     if element.typ == "Dice":
                         clicked_dice(element)
 

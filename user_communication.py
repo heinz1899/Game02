@@ -1,27 +1,23 @@
 from player import player
 
-
-
 def communication_0() -> tuple[str, bool]:
     message = [
         "Hallo user, ich bin Dein persönlicher Assistent.",
-        "Verrätst Du mir Deinen Vornamen?            ",  # Leerzeichen für kurze Pause bei der Ausgabe
-        "Bitte antworte mit 'ja' oder 'nein'.",
+        "Verrätst Du mir Deinen Vornamen? (j/n)"
     ]
     new_input = True
     next_message = 1
     return message, new_input, next_message
 
-
 def communication_1(input_text: str) -> tuple[str, bool, int]:
-    if input_text == "ja":
+    if input_text == "j":
         message = ["Vielen Dank! Bitte gib Deinen Vornamen in das Textfeld ein.", ""]
         new_input = True
-    elif input_text == "nein":
+    elif input_text == "n":
         message = ['Das kann ich gut verstehen.', 'Ich werde Dich einfach "user" nennen.']
         new_input = False
     else:
-        message = ["Ich habe Dich nicht verstanden.", "Bitte antworte mit 'Ja' oder 'Nein'."]
+        message = ["Ich habe Dich nicht verstanden.", "Bitte antworte mit 'j' oder 'n'."]
         new_input = True
     next_message = 2
     return (message, new_input, next_message)
