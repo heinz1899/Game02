@@ -103,7 +103,7 @@ while run:
                 else:
                     if element.typ == "Button":
                         clicked_button(element)
-                        print(schocken.punkte_ermitteln("number", group_elemente, dice_counter))
+                        print(schocken.draw_ergebnis(group_elemente, dice_counter))
                     if element.typ == "Dice":
                         clicked_dice(element)
 

@@ -43,36 +43,36 @@ class Schocken:
             enabled = button != "Neues Spiel"
             group.add(Element(n, 'Button', f'{self.path}buttons/Button{n}', button_pos[button], enabled))
 
-    def ergebnis_typ_ermitteln(self, wurf):
+    def ergebnis_typ(self, wurf: list) -> tuple[str, int]:
+        wurf = sorted(wurf, reverse=True)
         if wurf == [1, 1, 1]:
-            return "schock_aus"
-        elif sorted(wurf)[1] == 1:
-            return "schock"
+            return "schock_aus", None
+        elif wurf[1] == 1:
+            summe = sum(wurf) - 2
+            return "schock", summe
         elif len(set(wurf)) == 1:
-            return "general"
-        elif sorted(wurf)[0] == sorted(wurf)[1] - 1 and sorted(wurf)[1] == sorted(wurf)[2] - 1:
-            return "street"
+            return "general", sum(wurf)
+        elif wurf[0] == wurf[1] + 1 and wurf[1] == wurf[2] + 1:
+            return "street", sum(wurf)
         else:
-            return "number"
+            summe = int(f"{wurf[2]}{wurf[1]}{wurf[0]}")
+            return "number", summe
 
-    def punkte_ermitteln(self, ergebnis_typ, group, d_counter):
-        ergebnis_typen = {"schock_aus": 0, "schock": 1, "general": 2, "street": 3, "number": 4}
+    def draw_ergebnis(self, group, d_counter):
+        # ergebnis_typen = {"schock_aus": 0, "schock": 1, "general": 2, "street": 3, "number": 4}
         w = [element.id for element in group if element.typ == "Dice"]
         wurf = sorted(w, reverse=True)
-        print(wurf)
-        print(wurf[0])
         wurf_count = {1: "ersten", 2: "zweiten", 3: "dritten"}
-        erg_typ = ergebnis_typen[ergebnis_typ]
+        # erg_typ = ergebnis_typen[ergebnis_typ]
+        erg_typ, summe = self.ergebnis_typ(wurf)
 
-        if erg_typ == 4:
+        if erg_typ == "number":
             return f"Zahl: {wurf[0]} {wurf[1]}{wurf[2]} im {wurf_count[d_counter]} Wurf"
-        if erg_typ == 3:
-            return wurf
-        if erg_typ == 2:
-            return wurf
-        if erg_typ == 1:
-            return wurf
-
-
-test = Schocken()
-print(test.ergebnis_typ_ermitteln([4, 2, 3]))
+        if erg_typ == "street":
+            return f"Straße: {wurf[0]} {wurf[1]} {wurf[2]} im {wurf_count[d_counter]} Wurf"
+        if erg_typ == "general":
+            return f"General {wurf[0]} im {wurf_count[d_counter]} Wurf"
+        if erg_typ == "schock":
+            return f" Schock {summe} im {wurf_count[d_counter]} Wurf"
+        if erg_typ == "schock_aus":
+            return "Schock AUS - Du hast die Runde gewonnen"
