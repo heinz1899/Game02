@@ -71,6 +71,7 @@ if game == "schocken":
     dice_counter = 1  # zum zählen der Würfe
     schocken.add_elements(group_elemente)
     schocken.started = True
+
 # --------------------------------------------
 
 # ++++++++++++++++++++++++++++++++++ Game loop +++++++++++++++++++++++++++++++++++++++
@@ -82,6 +83,7 @@ while run:
     for event in pg.event.get():
         if event.type == pg.USEREVENT:
             animate_dice = False
+            schocken.draw = True
         if event.type == pg.QUIT:
             run = False
         if user_communication:
@@ -103,7 +105,7 @@ while run:
                 else:
                     if element.typ == "Button":
                         clicked_button(element)
-                        print(schocken.draw_ergebnis(group_elemente, dice_counter))
+                        schocken.draw = True
                     if element.typ == "Dice":
                         clicked_dice(element)
 
@@ -160,8 +162,10 @@ while run:
     # +++++++++++ Schocken end
 
     group_elemente.draw(screen)
-    pg.display.update()
 
+    if schocken.draw:
+        schocken.render_ergebnis(group_elemente, dice_counter, screen, player)
+    pg.display.update()
     clock.tick(TICK)
 
 pg.quit()

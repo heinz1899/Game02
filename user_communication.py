@@ -55,8 +55,6 @@ def communication_3(gender: str) -> tuple[str, bool, int]:
         next_message = 3
         new_input = True
 
-
-
     return message, new_input, next_message
 
 

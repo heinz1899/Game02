@@ -4,7 +4,6 @@ from constants import BOARD_FONT
 from constants import SCREEN_BORDER, SCREEN_WIDTH
 from game_text import rules
 
-
 pg.init()
 
 
@@ -16,6 +15,7 @@ class Schocken:
         self.font_size = 32
         self.font = pg.font.Font(BOARD_FONT, self.font_size)
         self.path = 'Images/'
+        self.draw = False
 
     def background(self, surface):
         schocken_rect = pg.Surface((SCREEN_WIDTH, SCREEN_BORDER))
@@ -58,21 +58,25 @@ class Schocken:
             summe = int(f"{wurf[2]}{wurf[1]}{wurf[0]}")
             return "number", summe
 
-    def draw_ergebnis(self, group, d_counter):
-        # ergebnis_typen = {"schock_aus": 0, "schock": 1, "general": 2, "street": 3, "number": 4}
+    def render_ergebnis(self, group, d_counter, surface, player):
         w = [element.id for element in group if element.typ == "Dice"]
         wurf = sorted(w, reverse=True)
         wurf_count = {1: "ersten", 2: "zweiten", 3: "dritten"}
-        # erg_typ = ergebnis_typen[ergebnis_typ]
         erg_typ, summe = self.ergebnis_typ(wurf)
 
         if erg_typ == "number":
-            return f"Zahl: {wurf[0]} {wurf[1]}{wurf[2]} im {wurf_count[d_counter]} Wurf"
+            ergebnis_txt = f"Zahl: {wurf[0]} {wurf[1]}{wurf[2]} im {wurf_count[d_counter]} Wurf"
         if erg_typ == "street":
-            return f"Straße: {wurf[0]} {wurf[1]} {wurf[2]} im {wurf_count[d_counter]} Wurf"
+            wurf = sorted(wurf, reverse=False)
+            ergebnis_txt = f"Straße: {wurf[0]} {wurf[1]} {wurf[2]} im {wurf_count[d_counter]} Wurf"
         if erg_typ == "general":
-            return f"General {wurf[0]} im {wurf_count[d_counter]} Wurf"
+            ergebnis_txt = f"General {wurf[0]} im {wurf_count[d_counter]} Wurf"
         if erg_typ == "schock":
-            return f" Schock {summe} im {wurf_count[d_counter]} Wurf"
+            ergebnis_txt = f" Schock {summe} im {wurf_count[d_counter]} Wurf"
         if erg_typ == "schock_aus":
-            return "Schock AUS - Du hast die Runde gewonnen"
+            ergebnis_txt = "Schock AUS - Du hast die Runde gewonnen"
+
+        text = pg.font.SysFont("arial", 24).render(ergebnis_txt, True, "black")
+        name = pg.font.SysFont("arial", 30).render(player.name, True, "red")
+        surface.blit(name, (50, 10))
+        surface.blit(text, (50, 50))
