@@ -3,6 +3,8 @@ from elements import Element
 from constants import BOARD_FONT
 from constants import SCREEN_BORDER, SCREEN_WIDTH
 from game_text import rules
+from player import Character
+
 
 pg.init()
 
@@ -77,6 +79,9 @@ class Schocken:
             ergebnis_txt = "Schock AUS - Du hast die Runde gewonnen"
 
         text = pg.font.SysFont("arial", 24).render(ergebnis_txt, True, "black")
-        name = pg.font.SysFont("arial", 30).render(player.name, True, "red")
+        name = pg.font.SysFont("arial", 30).render(player.name, True, "blue")
         surface.blit(name, (50, 10))
         surface.blit(text, (50, 50))
+
+    def computer_play(self):
+        computer_player = Character(name="Oskar", sex="male", human=False)
