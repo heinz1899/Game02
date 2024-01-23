@@ -83,5 +83,7 @@ class Schocken:
         surface.blit(name, (50, 10))
         surface.blit(text, (50, 50))
 
+
+
     def computer_play(self):
         computer_player = Character(name="Oskar", sex="male", human=False)
