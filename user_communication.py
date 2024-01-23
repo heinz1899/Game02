@@ -36,19 +36,19 @@ def communication_2(player_name: str) -> tuple[str, bool]:
 
 
 def communication_3(gender: str) -> tuple[str, bool, int]:
-    new_input = False
+    new_input = True
     next_message = None
     if gender == "a":
         player.sex = "female"
-        message = [f"Alles klar liebe {player.name}"]
+        message = [f"Alles klar liebe {player.name}."]
         next_message = 4
     elif gender == "b":
         player.sex = "male"
-        message = [f"Alles klar lieber {player.name}"]
+        message = [f"Alles klar lieber {player.name}."]
         next_message = 4
     elif gender == "c":
         player.sex = "divers"
-        message = [f"Alles klar liebes {player.name}"]
+        message = [f"Alles klar liebes {player.name}."]
         next_message = 4
     else:
         message = [
@@ -59,6 +59,14 @@ def communication_3(gender: str) -> tuple[str, bool, int]:
         new_input = True
 
     return message, new_input, next_message
+
+def communication_4():
+    new_input = False
+    next_message = None
+    message = ["Lass die Spiele beginnen!"]
+
+    return message, new_input, next_message
+
 
 
 def create_message(input_text: str, communication_counter: int) -> tuple[str, bool]:
@@ -74,6 +82,8 @@ def create_message(input_text: str, communication_counter: int) -> tuple[str, bo
         message, new_input, next_message = communication_2(text)
     # Abfrage gender
     if communication_counter == 3:
+        message, new_input, next_message = communication_3(text)
+    if communication_counter == 4:
         message, new_input, next_message = communication_3(text)
 
     return message, new_input, next_message
