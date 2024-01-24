@@ -29,7 +29,7 @@ input_text = ""  # verändert sich während der Eingabe
 player_text = ""  # input nach Bestätigung mit Return
 
 
-# Mouse-Events
+# Mouse-Events +++++++++++++++++++++++++++++++++++++++++++++++
 def clicked_button(element):
     if element.id == 0:  # Button "würfeln"
         start_dice_animation() # (element)
@@ -40,7 +40,7 @@ def clicked_dice(element):  # schocken
     element.image = image_dice_disabled[element.id - 1] if element.selected else image_dice_enabled[element.id - 1]
 
 
-# Dice
+# Dice ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def start_dice_animation(): # (element)
     global animate_dice
     global dice_counter
@@ -61,7 +61,7 @@ def roll_dice():
         element.image = element.image_enabled
 
 
-# Games
+# Games +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 games = {"none": "none", "schocken": "schocken", "five_dices": "five_dices"}
 game = games["none"]
 # ------------------------------------------
@@ -78,7 +78,6 @@ animate_dice = True
 def start_schocken():
     global schocken_started
     global game
-    global animate_dice
     start_dice_animation()  # first roll
     game = games["schocken"]
     schocken.started = True
@@ -91,7 +90,7 @@ def start_schocken():
 run = True
 text_counter = 0
 while run:
-    # event handle
+    # event handle ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     pg.draw.rect(screen, SCREEN_BACKGROUND_COLOR, [0, SCREEN_BORDER, SCREEN_WIDTH, SCREEN_HEIGHT])
     for event in pg.event.get():
         if event.type == pg.USEREVENT:
@@ -111,7 +110,6 @@ while run:
                     print(communication_counter)
                     if communication_counter == 4:
                         start_schocken()
-
                 else:
                     input_text += event.unicode
         if event.type == pg.MOUSEBUTTONDOWN:
