@@ -32,7 +32,7 @@ player_text = ""  # input nach Bestätigung mit Return
 # Mouse-Events
 def clicked_button(element):
     if element.id == 0:  # Button "würfeln"
-        start_dice_animation() # (element)
+        start_dice_animation()
 
 
 def clicked_dice(element):  # schocken
@@ -41,7 +41,7 @@ def clicked_dice(element):  # schocken
 
 
 # Dice
-def start_dice_animation(): # (element)
+def start_dice_animation():
     global animate_dice
     global dice_counter
     pg.time.set_timer(pg.USEREVENT, 1000, True)
