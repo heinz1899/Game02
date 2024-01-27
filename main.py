@@ -43,10 +43,6 @@ def clicked_dice(element):  # schocken
 <<<<<<< HEAD
 # Dice
 def start_dice_animation():
-=======
-# Dice ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-def start_dice_animation(): # (element)
->>>>>>> 77d6f2a6946ae1ff17e16ecd7cfc150c0486547b
     global animate_dice
     global dice_counter
     pg.time.set_timer(pg.USEREVENT, 1000, True)
