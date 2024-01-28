@@ -40,7 +40,6 @@ def clicked_dice(element):  # schocken
     element.image = image_dice_disabled[element.id - 1] if element.selected else image_dice_enabled[element.id - 1]
 
 
-<<<<<<< HEAD
 # Dice
 def start_dice_animation():
     global animate_dice
@@ -69,7 +68,7 @@ game = games["none"]
 schocken = Schocken()
 schocken_started = False
 animate_dice = False
-dice_counter = 1  # zum zählen der Würfe
+dice_counter = 0  # zum zählen der Würfe
 image_dice_enabled = [pg.image.load(f"./Images/dices/{i + 1}_e.png") for i in range(6)]
 image_dice_disabled = [pg.image.load(f"./Images/dices/{i + 1}_d.png") for i in range(6)]
 schocken.add_elements(group_elemente)
@@ -127,6 +126,7 @@ while run:
 
     # +++++++++ User communication start ++++++++++++
     messages, new_input, next_message = create_message(player_text, communication_counter)
+    player.prompt = f"{player.name}>: "
 
     messages_lens = [len(m) for m in messages]
     len_all_messages = sum(messages_lens)

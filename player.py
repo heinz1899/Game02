@@ -13,4 +13,4 @@ class Character:
         self.game_result = []
 
 
-player = Character("Heiner", "divers", human=True)  # der Mensch, der das spiel spielt
+player = Character("****", "divers", human=True)  # der Mensch, der das spiel spielt
