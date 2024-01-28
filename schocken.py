@@ -45,7 +45,7 @@ class Schocken:
             enabled = button != "Neues Spiel"
             group.add(Element(n, 'Button', f'{self.path}buttons/Button{n}', button_pos[button], enabled))
 
-    def ergebnis_typ(self, wurf: list) -> tuple[str, int]:
+    def result(self, wurf: list) -> tuple[str, int]:
         wurf = sorted(wurf, reverse=True)
         if wurf == [1, 1, 1]:
             return "schock_aus", None
@@ -60,29 +60,36 @@ class Schocken:
             summe = int(f"{wurf[2]}{wurf[1]}{wurf[0]}")
             return "number", summe
 
-    def render_ergebnis(self, group, d_counter, surface, player):
+    def render_result(self, group, d_counter, surface, player):
         w = [element.id for element in group if element.typ == "Dice"]
         wurf = sorted(w, reverse=True)
         wurf_count = {1: "ersten", 2: "zweiten", 3: "dritten"}
-        erg_typ, summe = self.ergebnis_typ(wurf)
+        erg_typ, summe = self.result(wurf)
 
         if erg_typ == "number":
-            ergebnis_txt = f"Zahl: {wurf[0]} {wurf[1]}{wurf[2]} im {wurf_count[d_counter]} Wurf"
+            result_txt = f"Zahl: {wurf[0]} {wurf[1]}{wurf[2]} im {wurf_count[d_counter]} Wurf"
         if erg_typ == "street":
             wurf = sorted(wurf, reverse=False)
-            ergebnis_txt = f"Straße: {wurf[0]} {wurf[1]} {wurf[2]} im {wurf_count[d_counter]} Wurf"
+            result_txt = f"Straße: {wurf[0]} {wurf[1]} {wurf[2]} im {wurf_count[d_counter]} Wurf"
         if erg_typ == "general":
-            ergebnis_txt = f"General {wurf[0]} im {wurf_count[d_counter]} Wurf"
+            result_txt = f"General {wurf[0]} im {wurf_count[d_counter]} Wurf"
         if erg_typ == "schock":
-            ergebnis_txt = f" Schock {summe} im {wurf_count[d_counter]} Wurf"
+            result_txt = f" Schock {summe} im {wurf_count[d_counter]} Wurf"
         if erg_typ == "schock_aus":
-            ergebnis_txt = "Schock AUS - Du hast die Runde gewonnen"
+            result_txt = "Schock AUS - Du hast die Runde gewonnen"
 
-        text = pg.font.SysFont("arial", 24).render(ergebnis_txt, True, "black")
+        text = pg.font.SysFont("arial", 24).render(result_txt, True, "black")
         name = pg.font.SysFont("arial", 30).render(player.name, True, "blue")
         surface.blit(name, (50, 10))
         surface.blit(text, (50, 50))
 
+    def save_dice_result(self, group, d_counter, player):
+        """Output: erg_Typ, Summe, Anzahl Würfe"""
+        w = [element.id for element in group if element.typ == "Dice"]
+        wurf = sorted(w, reverse=True)
+        erg_typ, summe = self.result(wurf)
+        result = {"typ": erg_typ, "summe": summe, "number_of_dice_rolls": d_counter}
+        return result
 
 
     def computer_play(self):

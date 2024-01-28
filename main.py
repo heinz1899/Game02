@@ -33,6 +33,12 @@ player_text = ""  # input nach Bestätigung mit Return
 def clicked_button(element):
     if element.id == 0:  # Button "würfeln"
         start_dice_animation()
+    if element.id == 1:  # Button "Ok"
+        if game == "schocken":
+            result = schocken.save_dice_result(group_elemente, dice_counter, player)
+            for key in result:
+                print(result[key])
+
 
 
 def clicked_dice(element):  # schocken
@@ -81,7 +87,7 @@ def start_schocken():
     start_dice_animation()  # first roll
     game = games["schocken"]
     schocken.started = True
-    print("Schocken ist gestartet!")
+
 
 
 # --------------------------------------------
@@ -107,7 +113,6 @@ while run:
                     text_counter = 0
                     communication_counter = next_message
                     input_text = ""
-                    print(communication_counter)
                     if communication_counter == 4:
                         start_schocken()
                 else:
@@ -182,7 +187,8 @@ while run:
 
         group_elemente.draw(screen)
         if schocken.draw:
-            schocken.render_ergebnis(group_elemente, dice_counter, screen, player)
+            schocken.render_result(group_elemente, dice_counter, screen, player)
+
 
     pg.display.update()
     clock.tick(TICK)
