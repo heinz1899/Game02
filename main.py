@@ -36,8 +36,8 @@ def clicked_button(element):
     if element.id == 1:  # Button "Ok"
         if game == "schocken":
             result = schocken.save_dice_result(group_elemente, dice_counter, player)
-            for key in result:
-                print(result[key])
+            player.game_result.append(result)
+            print(player.game_result)
 
 
 

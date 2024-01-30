@@ -57,7 +57,7 @@ class Schocken:
         elif wurf[0] == wurf[1] + 1 and wurf[1] == wurf[2] + 1:
             return "street", sum(wurf)
         else:
-            summe = int(f"{wurf[2]}{wurf[1]}{wurf[0]}")
+            summe = int(f"{wurf[0]}{wurf[1]}{wurf[2]}")
             return "number", summe
 
     def render_result(self, group, d_counter, surface, player):
@@ -88,7 +88,17 @@ class Schocken:
         w = [element.id for element in group if element.typ == "Dice"]
         wurf = sorted(w, reverse=True)
         erg_typ, summe = self.result(wurf)
-        result = {"typ": erg_typ, "summe": summe, "number_of_dice_rolls": d_counter}
+        # points
+        if erg_typ == "number":
+            points = 1
+        elif erg_typ == "street":
+            points = 2
+        elif erg_typ == "general":
+            points = 3
+        elif erg_typ == "schock" and summe > 1:
+            points = summe
+
+        result = {"typ": erg_typ, "summe": summe, "number_of_dice_rolls": d_counter, "points": points}
         return result
 
 
