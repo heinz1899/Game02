@@ -2,7 +2,7 @@ import pygame as pg
 from user_communication import create_message
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_BACKGROUND_COLOR, SCREEN_BORDER, TICK
 from constants import DIALOG_FONT, LINE_SPACING
-from player import player
+from player import human, computer
 from schocken import Schocken
 import random as rnd
 
@@ -31,13 +31,14 @@ player_text = ""  # input nach Bestätigung mit Return
 
 # Mouse-Events +++++++++++++++++++++++++++++++++++++++++++++++
 def clicked_button(element):
-    if element.id == 0:  # Button "würfeln"
+    if element.id == 0:  # Button "würfeln" für 2. und 3. Wurf
         start_dice_animation()
     if element.id == 1:  # Button "Ok"
         if game == "schocken":
-            result = schocken.save_dice_result(group_elemente, dice_counter, player)
-            player.game_result.append(result)
-            print(player.game_result)
+            human.game_result = []
+            result = schocken.save_dice_result(group_elemente, dice_counter, human)
+            human.game_result.append(result)
+            print(human.game_result)
 
 
 
@@ -131,7 +132,7 @@ while run:
 
     # +++++++++ User communication start ++++++++++++
     messages, new_input, next_message = create_message(player_text, communication_counter)
-    player.prompt = f"{player.name}>: "
+    human.prompt = f"{human.name}>: "
 
     messages_lens = [len(m) for m in messages]
     len_all_messages = sum(messages_lens)
@@ -161,7 +162,7 @@ while run:
 
     #  input Prombt
     if new_input and text_counter >= (len_all_messages * text_speed):
-        input_surface = font.render(f"{player.prompt} {input_text}", True, (40, 150, 0))
+        input_surface = font.render(f"{human.prompt} {input_text}", True, (40, 150, 0))
         screen.blit(input_surface, (20, SCREEN_BORDER + (LINE_SPACING * lines)))
         lines = 0
 
@@ -187,7 +188,7 @@ while run:
 
         group_elemente.draw(screen)
         if schocken.draw:
-            schocken.render_result(group_elemente, dice_counter, screen, player)
+            schocken.render_result(50, 10, group_elemente, dice_counter, screen, human)
 
 
     pg.display.update()

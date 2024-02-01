@@ -1,4 +1,4 @@
-from player import player
+from player import human
 
 
 def communication_0() -> tuple[str, bool]:
@@ -15,7 +15,7 @@ def communication_1(input_text: str) -> tuple[str, bool, int]:
         next_message = 2
     elif input_text == "n":
         message = ['Das kann ich gut verstehen.', 'Ich werde Dich einfach "user" nennen.', 'mit Return bestätigen']
-        player.name = "User"
+        human.name = "User"
         new_input = True
         next_message = 2
     else:
@@ -26,19 +26,19 @@ def communication_1(input_text: str) -> tuple[str, bool, int]:
     return (message, new_input, next_message)
 
 
-def communication_2(player_name: str) -> tuple[str, bool]:
-    if player.name != "User":
-        player.name = player_name.strip().capitalize()
-    if player.name == "User":
+def communication_2(human_name: str) -> tuple[str, bool]:
+    if human.name != "User":
+        human.name = human_name.strip().capitalize()
+    if human.name == "User":
         message = [
             "Wie möchtest Du angesprochen werden: ",
             "1) Liebe Userin, 2) Lieber User oder 3) Liebes User",
         ]
     else:
         message = [
-            f"{player.name} ist ein sehr schöner Name!",
+            f"{human.name} ist ein sehr schöner Name!",
             "Er erinnert mich an jemanden den ich vor langer Zeit gekannt habe, Wie möchtest",
-            f"Du angesprochen werden? A) Liebe, B) Lieber oder C) Liebes {player.name}",
+            f"Du angesprochen werden? A) Liebe, B) Lieber oder C) Liebes {human.name}",
         ]
     next_message = 3
     new_input = True
@@ -50,21 +50,21 @@ def communication_3(gender: str) -> tuple[str, bool, int]:
     next_message = None
     return_text = "Drücke Return, um das Spiel zu starten"
     if gender == "a" or gender == "1":
-        player.sex = "female"
-        message = [f"Alles klar liebe {player.name}. {return_text}"]
+        human.sex = "female"
+        message = [f"Alles klar liebe {human.name}. {return_text}"]
         next_message = 4
         if gender == "1":
-            player.name = "Userin"
+            human.name = "Userin"
     elif gender == "b" or gender == "2":
-        player.sex = "male"
-        message = [f"Alles klar lieber {player.name}. {return_text}"]
+        human.sex = "male"
+        message = [f"Alles klar lieber {human.name}. {return_text}"]
         next_message = 4
     elif gender == "c" or gender == "3":
-        player.sex = "divers"
-        message = [f"Alles klar liebes {player.name}. {return_text}"]
+        human.sex = "divers"
+        message = [f"Alles klar liebes {human.name}. {return_text}"]
         next_message = 4
     else:
-        message = [f"Gib A für Liebe {player.name}, B für Lieber {player.name}", f"oder C für Liebes {player.name} ein."]
+        message = [f"Gib A für Liebe {human.name}, B für Lieber {human.name}", f"oder C für Liebes {human.name} ein."]
         next_message = 3
         new_input = True
 
