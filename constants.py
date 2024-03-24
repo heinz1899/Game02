@@ -12,3 +12,6 @@ SCREEN_BORDER = 600  # border between image and text
 DIALOG_FONT = "Fonts/CutiveMono-Regular.ttf"
 BOARD_FONT = "Fonts/Kanit/Kanit-Bold.ttf"
 LINE_SPACING = 25
+
+CODER_2 = "heinz1988"
+CODER_2_MAIL = "hein1899@pschp.de" # Atention: no z in Mail-Adress
